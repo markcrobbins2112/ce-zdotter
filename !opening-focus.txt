@@ -1,0 +1,24 @@
+User prompt:
+when a file is programmatically opened in vscode, it opens a new view in the current group, can I get it to instead focus the file if it is already open, else open it
+
+Assistant answer:
+Yes. Before opening, check whether the document is already open; if so, call `showTextDocument` on that existing `TextDocument` so VS Code focuses the existing tab instead of creating a new one. Example:
+
+```ts
+import * as vscode from 'vscode';
+
+async function focusOrOpen(uri: vscode.Uri) {
+  // See if the doc is already open (any group).
+  const openDoc = vscode.workspace.textDocuments.find(
+    (doc) => doc.uri.toString() === uri.toString()
+  );
+
+  // If open, just show it; otherwise open then show.
+  const doc = openDoc ?? (await vscode.workspace.openTextDocument(uri));
+
+  // showTextDocument will reuse the existing tab for this doc.
+  await vscode.window.showTextDocument(doc, { preview: false });
+}
+```
+
+`showTextDocument` is idempotent here: when the doc is already open, it activates that tab in its existing group; when not, it opens a new one. If you need to force a specific group, pass `viewColumn` in the options.

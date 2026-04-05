@@ -1,0 +1,69 @@
+create a vscode extension called zdotter which has these settings:
+zdotdir - root directory for index
+output template 1 - template that user can use where ${z} will expand to the actual zdotvalue
+output template 2 - template that user can use where ${z} will expand to the actual zdotvalue
+
+extension will has these commands:
+insert zdot - inserts 'z.'+zdotvalue
+insert zdot template 1 - using template
+insert zdot template 2 - using template
+
+a zdotvalue is
+YYYYMMDDHHmmssrrrr
+202603271722140900
+where rrrr is a random 4 digit sequence
+
+when a zdot is inserted a file is created as
+zdotdir/YYYY/MM/DD/hhmmssrrrr.zdoti
+the file shall contain as first line the fullpath of the active file
+
+other commands are:
+update file - every zdot (z.YYYYMMDDHHmmssrrrr) in file is processed:
+if zdoti file is found on path, then its first line is updated with full path of current file else the zdoti file is created
+
+goto zdot - search line for zdashes (z-YYYYMMDDHHmmssrrrr) if more than one, offer a picker, on select search the directory made from digit part of the zdash for zdoti file,
+open that file in the first line of the zdoti or focus it if already open, find the matching zdot text in the file (z.YYYYMMDDHHmmssrrrr) and put the cursor at the before the 'z.'
+
+copy as zdash - with any zdots (z.YYYYMMDDHHmmssrrrr) on the line (use chooser if necc) copy the selected or sole zdot as a zdash (z-YYYYMMDDHHmmssrrrr)
+
+next/prev zdot - move cursor to zdot
+next/prev zdash - move cursor to zdash
+
+open zdoti - open the zdoti for zdots found on line
+
+commands:
+ zdotter.insertZdot           insert z
+ zdotter.insertTemplate1      insert alt+z
+ zdotter.insertTemplate2      insert alt+shift+z
+ zdotter.gotoZdot             ` z
+ zdotter.updateFile           alt+z alt+z
+ zdotter.copyAsZdash          alt+z insert
+ zdotter.nextZdot             alt+z pagedown
+ zdotter.prevZdot             alt+z pageup
+ zdotter.nextZdash            alt+z alt+pagedown
+ zdotter.prevZdash            alt+z alt+pagedown
+ zdotter.openZdoti            alt+z enter
+
+z-202604050849441043 z-202604050849441043
+
+z.202604050852583613
+
+z.202604050849441043
+
+z-202603271724346190
+
+	{
+		"key": "insert z",
+		"command": "workbench.action.tasks.runTask",
+		"args": "ZdotInsert"
+	},
+	{
+		"key": "insert alt+z",
+		"command": "workbench.action.tasks.runTask",
+		"args": "ZdotInsertAlt"
+	},
+
+	{
+		"key": "` z",
+		"command": "zdotter.gotoZdot"
+	},

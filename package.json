@@ -1,0 +1,106 @@
+{
+  "name": "zdotter",
+  "displayName": "zdotter",
+  "version": "0.0.1",
+  "description": "Manage zdots/zdashes and their index files.",
+  "publisher": "local",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:zdotter.insertZdot",
+    "onCommand:zdotter.insertTemplate1",
+    "onCommand:zdotter.insertTemplate2",
+    "onCommand:zdotter.updateFile",
+    "onCommand:zdotter.gotoZdot",
+    "onCommand:zdotter.copyAsZdash",
+    "onCommand:zdotter.nextZdot",
+    "onCommand:zdotter.prevZdot",
+    "onCommand:zdotter.nextZdash",
+    "onCommand:zdotter.prevZdash",
+    "onCommand:zdotter.openZdoti"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "zdotter",
+      "properties": {
+        "zdotter.zdotdir": {
+          "type": "string",
+          "default": "",
+          "description": "Root directory for zdoti files. Leave blank to default to <workspace>/.zdotter (or your home directory if no workspace is open)."
+        },
+        "zdotter.outputTemplate1": {
+          "type": "string",
+          "default": "z.${z}",
+          "description": "Template for Insert Zdot Template 1. ${z} is replaced with the zdot value."
+        },
+        "zdotter.outputTemplate2": {
+          "type": "string",
+          "default": "[${z}]",
+          "description": "Template for Insert Zdot Template 2. ${z} is replaced with the zdot value."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "zdotter.insertZdot",
+        "title": "zdotter: Insert zdot"
+      },
+      {
+        "command": "zdotter.insertTemplate1",
+        "title": "zdotter: Insert zdot Template 1"
+      },
+      {
+        "command": "zdotter.insertTemplate2",
+        "title": "zdotter: Insert zdot Template 2"
+      },
+      {
+        "command": "zdotter.updateFile",
+        "title": "zdotter: Update File zdoti references"
+      },
+      {
+        "command": "zdotter.gotoZdot",
+        "title": "zdotter: Goto zdot from zdash"
+      },
+      {
+        "command": "zdotter.copyAsZdash",
+        "title": "zdotter: Copy zdot as zdash"
+      },
+      {
+        "command": "zdotter.nextZdot",
+        "title": "zdotter: Next zdot"
+      },
+      {
+        "command": "zdotter.prevZdot",
+        "title": "zdotter: Previous zdot"
+      },
+      {
+        "command": "zdotter.nextZdash",
+        "title": "zdotter: Next zdash"
+      },
+      {
+        "command": "zdotter.prevZdash",
+        "title": "zdotter: Previous zdash"
+      },
+      {
+        "command": "zdotter.openZdoti",
+        "title": "zdotter: Open zdoti for zdot"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.19",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.3",
+    "vsce": "^2.15.0"
+  }
+}
