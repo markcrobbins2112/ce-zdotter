@@ -317,6 +317,27 @@ async function openZdoti(): Promise<void> {
   await vscode.window.showTextDocument(doc, { preview: false });
 }
 
+async function zdashLine(): Promise<void> {
+  const editor = vscode.window.activeTextEditor;
+  if (!editor) {
+    return;
+  }
+
+  const lineNo = editor.selection.active.line;
+  const line = editor.document.lineAt(lineNo);
+  const regex = /z\.([0-9]{18})/g;
+  const replaced = line.text.replace(regex, (_match, digits) => `z-${digits}`);
+  if (replaced === line.text) {
+    vscode.window.showInformationMessage('No zdots found on the current line.');
+    return;
+  }
+
+  await editor.edit((editBuilder) => {
+    editBuilder.replace(line.range, replaced);
+  });
+  vscode.window.setStatusBarMessage('Replaced zdots with zdashes on the current line.', 3000);
+}
+
 const definitionProvider: vscode.DefinitionProvider = {
   provideDefinition: async (document, position) => {
     const token = tokenAtPosition(document, position);
@@ -363,6 +384,7 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand('zdotter.updateFile', updateFileZdots),
     vscode.commands.registerCommand('zdotter.gotoZdot', gotoZdot),
     vscode.commands.registerCommand('zdotter.copyAsZdash', copyAsZdash),
+    vscode.commands.registerCommand('zdotter.zdashLine', zdashLine),
     vscode.commands.registerCommand('zdotter.nextZdot', () => moveToToken(zdotRegex, true)),
     vscode.commands.registerCommand('zdotter.prevZdot', () => moveToToken(zdotRegex, false)),
     vscode.commands.registerCommand('zdotter.nextZdash', () => moveToToken(zdashRegex, true)),

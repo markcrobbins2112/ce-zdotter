@@ -71,6 +71,10 @@
         "title": "zdotter: Copy zdot as zdash"
       },
       {
+        "command": "zdotter.zdashLine",
+        "title": "zdotter: Zdash the line"
+      },
+      {
         "command": "zdotter.nextZdot",
         "title": "zdotter: Next zdot"
       },

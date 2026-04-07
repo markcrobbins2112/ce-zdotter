@@ -13,6 +13,7 @@ VS Code extension to manage zdots/zdashes and their companion `.zdoti` index fil
 - **Update File zdoti references**: For every `z.<digits>` in the file, updates/creates its `.zdoti` first line to the current file path.
 - **Goto zdot from zdash**: On the current line, pick a `z-<digits>`, open its `.zdoti`, then open the referenced file and jump to the matching `z.<digits>`.
 - **Copy zdot as zdash**: From `z.<digits>` on the current line, copy `z-<digits>` to the clipboard.
+- **Zdash the line**: Replace every `z.<digits>` on the current line with `z-<digits>`.
 - **Next/Previous zdot** and **Next/Previous zdash**: Move the cursor to the next/previous token in the document (wraps).
 - **Open zdoti for zdot**: From `z.<digits>` on the line, open/create its `.zdoti` file.
 
