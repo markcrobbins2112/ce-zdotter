@@ -238,6 +238,63 @@ async function gotoZdot(): Promise<void> {
   }
 }
 
+async function gotoZdotExisting(): Promise<void> {
+  const editor = vscode.window.activeTextEditor;
+  if (!editor) {
+    return;
+  }
+
+  const lineText = editor.document.lineAt(editor.selection.active.line).text;
+  const zdashes = lineMatches(zdashRegex, lineText);
+  if (!zdashes.length) {
+    vscode.window.showInformationMessage('No zdash on current line.');
+    return;
+  }
+
+  const selected = await pickValue(zdashes, 'z-');
+  if (!selected) {
+    return;
+  }
+
+  const zdotiPath = getZdotiPath(selected, resolveZdotDir());
+  const targetFile = await readFirstLine(zdotiPath);
+  if (!targetFile) {
+    vscode.window.showWarningMessage(`zdoti not found: ${zdotiPath}`);
+    return;
+  }
+
+const existingEditor = vscode.window.visibleTextEditors.find(
+  (e) => e.document.uri.fsPath === targetFile
+);
+
+let targetEditor: vscode.TextEditor;
+let targetDoc: vscode.TextDocument;
+
+if (existingEditor) {
+  targetEditor = await vscode.window.showTextDocument(existingEditor.document, {
+    viewColumn: existingEditor.viewColumn,
+    preserveFocus: false,
+    preview: false
+  });
+  targetDoc = targetEditor.document;
+} else {
+  targetDoc = await vscode.workspace.openTextDocument(targetFile);
+  targetEditor = await vscode.window.showTextDocument(targetDoc, {
+    preview: false
+  });
+}
+  const needle = `z.${selected}`;
+  const idx = targetDoc.getText().indexOf(needle);
+  if (idx >= 0) {
+    const pos = targetDoc.positionAt(idx);
+    const sel = new vscode.Selection(pos, pos);
+    targetEditor.selection = sel;
+    targetEditor.revealRange(new vscode.Range(pos, pos), vscode.TextEditorRevealType.InCenter);
+  } else {
+    vscode.window.showWarningMessage(`zdot ${needle} not found in target file.`);
+  }
+}
+
 async function copyAsZdash(): Promise<void> {
   const editor = vscode.window.activeTextEditor;
   if (!editor) {
@@ -383,6 +440,7 @@ export function activate(context: vscode.ExtensionContext): void {
     }),
     vscode.commands.registerCommand('zdotter.updateFile', updateFileZdots),
     vscode.commands.registerCommand('zdotter.gotoZdot', gotoZdot),
+    vscode.commands.registerCommand('zdotter.gotoZdotExisting', gotoZdotExisting),
     vscode.commands.registerCommand('zdotter.copyAsZdash', copyAsZdash),
     vscode.commands.registerCommand('zdotter.zdashLine', zdashLine),
     vscode.commands.registerCommand('zdotter.nextZdot', () => moveToToken(zdotRegex, true)),

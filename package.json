@@ -3,7 +3,7 @@
   "displayName": "zdotter",
   "version": "0.0.1",
   "description": "Manage zdots/zdashes and their index files.",
-  "publisher": "local",
+  "publisher": "markrobbins",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -16,6 +16,7 @@
     "onCommand:zdotter.insertTemplate2",
     "onCommand:zdotter.updateFile",
     "onCommand:zdotter.gotoZdot",
+    "onCommand:zdotter.gotoZdotExisting",
     "onCommand:zdotter.copyAsZdash",
     "onCommand:zdotter.nextZdot",
     "onCommand:zdotter.prevZdot",
@@ -67,6 +68,10 @@
         "title": "zdotter: Goto zdot from zdash"
       },
       {
+        "command": "zdotter.gotoZdotExisting",
+        "title": "zdotter: Goto zdot from zdash (focus existing)"
+      },
+      {
         "command": "zdotter.copyAsZdash",
         "title": "zdotter: Copy zdot as zdash"
       },
@@ -99,6 +104,7 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
+    "compile:vsix": "npx vsce package",
     "watch": "tsc -watch -p ./"
   },
   "devDependencies": {

@@ -35,7 +35,8 @@ commands:
  zdotter.insertZdot           insert z
  zdotter.insertTemplate1      insert alt+z
  zdotter.insertTemplate2      insert alt+shift+z
- zdotter.gotoZdot             ` z
+ zdotter.gotoZdot             ` shift+z
+ zdotter.gotoZdotExisting     ` z
  zdotter.updateFile           alt+z alt+z
  zdotter.copyAsZdash          alt+z insert
  zdotter.nextZdot             alt+z pagedown
