@@ -1,7 +1,7 @@
 {
 	"name": "zdotter",
 	"displayName": "zdotter",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "Manage zdots/zdashes and their index files.",
 	"publisher": "markrobbins",
 	"engines": {
@@ -11,6 +11,7 @@
 		"Other"
 	],
 	"main": "dist/extension.cjs",
+	"icon": "icon.jpg",
 	"files": [
 		"dist/extension.cjs",
 		"icon.jpg",
@@ -72,6 +73,7 @@
 		"onCommand:zdotter.prevZdot",
 		"onCommand:zdotter.nextZdash",
 		"onCommand:zdotter.prevZdash",
+		"onCommand:zdotter.copyNearestDotAsDash",
 		"onCommand:zdotter.openZdoti"
 	],
 	"contributes": {
@@ -170,6 +172,10 @@
 			{
 				"command": "zdotter.prevZdash",
 				"title": "zdotter: Previous zdash"
+			},
+			{
+				"command": "zdotter.copyNearestDotAsDash",
+				"title": "zdotter: Copy Nearest Dot As Dash"
 			},
 			{
 				"command": "zdotter.openZdoti",

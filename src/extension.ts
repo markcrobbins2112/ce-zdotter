@@ -228,7 +228,13 @@ async function insertWithTemplate(template: string): Promise<void> {
 
 	const filePath = editor.document.uri.fsPath;
 	await Promise.all(zdotValues.map((zdotValue) => writeZdoti(zdotValue, filePath)));
+
 	if (zdotValues.length === 1) {
+		const dashValue = `z-${zdotValues[0]}`;
+		// Copy the formatted z- value to the clipboard
+		await vscode.env.clipboard.writeText(dashValue);
+		// Show a native notification pop-up
+		vscode.window.showInformationMessage(`Copied "${dashValue}" to clipboard!`);
 		vscode.window.setStatusBarMessage(`Inserted zdot ${zdotValues[0]}`, 3000);
 	} else {
 		vscode.window.setStatusBarMessage(`Inserted ${zdotValues.length} zdots`, 3000);
@@ -462,6 +468,51 @@ async function zdashLine(): Promise<void> {
 	vscode.window.setStatusBarMessage('Replaced zdots with zdashes on the current line.', 3000);
 }
 
+export async function copyNearestDotAsDash(): Promise<void> {
+	const editor = vscode.window.activeTextEditor;
+	if (!editor) {
+		return;
+	}
+
+	const document = editor.document;
+	const cursorPosition = editor.selection.active;
+	const currentLine = cursorPosition.line;
+	const totalLines = document.lineCount;
+
+	let closestZValue: string | null = null;
+	let minimumDistance = Infinity;
+
+	// Limit search boundary up to 10 lines up or down
+	const startLine = Math.max(0, currentLine - 10);
+	const endLine = Math.min(totalLines - 1, currentLine + 10);
+
+	for (let l = startLine; l <= endLine; l++) {
+		const lineText = document.lineAt(l).text;
+		// Re-use your project's pre-defined offsetMatches helper function
+		const matches = offsetMatches(zdotRegex, lineText);
+
+		for (const match of matches) {
+			// Absolute line delta + character offset delta normalized to a scale fraction
+			const lineDelta = Math.abs(l - currentLine);
+			const charDelta = Math.abs(match.index - cursorPosition.character) / 1000;
+			const distance = lineDelta + charDelta;
+
+			if (distance < minimumDistance) {
+				minimumDistance = distance;
+				closestZValue = match.value;
+			}
+		}
+	}
+
+	if (closestZValue) {
+		const dashValue = `z-${closestZValue}`;
+		await vscode.env.clipboard.writeText(dashValue);
+		vscode.window.showInformationMessage(`Copied "${dashValue}" to clipboard!`);
+	} else {
+		vscode.window.showWarningMessage("No 'z.' sequence found within 10 lines.");
+	}
+}
+
 const definitionProvider: vscode.DefinitionProvider = {
 	provideDefinition: async (document, position) => {
 		const token = tokenAtPosition(document, position);
@@ -528,7 +579,8 @@ export function activate(context: vscode.ExtensionContext): void {
 		vscode.commands.registerCommand('zdotter.prevZdot', () => moveToToken(zdotRegex, false)),
 		vscode.commands.registerCommand('zdotter.nextZdash', () => moveToToken(zdashRegex, true)),
 		vscode.commands.registerCommand('zdotter.prevZdash', () => moveToToken(zdashRegex, false)),
-		vscode.commands.registerCommand('zdotter.openZdoti', openZdoti)
+		vscode.commands.registerCommand('zdotter.openZdoti', openZdoti),
+		vscode.commands.registerCommand('zdotter.copyNearestDotAsDash', copyNearestDotAsDash)
 	);
 
 	context.subscriptions.push(
