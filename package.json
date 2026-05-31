@@ -1,7 +1,7 @@
 {
   "name": "zdotter",
   "displayName": "zdotter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Manage zdots/zdashes and their index files.",
   "publisher": "markrobbins",
   "engines": {
@@ -14,6 +14,7 @@
     "onCommand:zdotter.insertZdot",
     "onCommand:zdotter.insertTemplate1",
     "onCommand:zdotter.insertTemplate2",
+    "onCommand:zdotter.toggleFreezeCursorOnInsert",
     "onCommand:zdotter.updateFile",
     "onCommand:zdotter.gotoZdot",
     "onCommand:zdotter.gotoZdotExisting",
@@ -43,6 +44,11 @@
           "type": "string",
           "default": "[${z}]",
           "description": "Template for Insert Zdot Template 2. ${z} is replaced with the zdot value."
+        },
+        "zdotter.freezeCursorOnInsert": {
+          "type": "boolean",
+          "default": false,
+          "description": "When true, insert commands keep the cursor at its original position instead of moving after inserted text."
         }
       }
     },
@@ -58,6 +64,10 @@
       {
         "command": "zdotter.insertTemplate2",
         "title": "zdotter: Insert zdot Template 2"
+      },
+      {
+        "command": "zdotter.toggleFreezeCursorOnInsert",
+        "title": "zdotter: Toggle Freeze Cursor On Insert"
       },
       {
         "command": "zdotter.updateFile",
