@@ -2,10 +2,27 @@
 
 VS Code extension to manage zdots/zdashes and their companion `.zdoti` index files.
 
+![icon](icon.jpg)
+---
+## AI Primary Files
+- ▪️[AGENTS.md](AGENTS.md)
+- ▪️[AILOG.md](AILOG.md)
+- ▪️[AITASKS.md](AITASKS.md)
+- ▪️[BUILD.md](BUILD.md)
+- ▪️[CODE.md](CODE.md)
+- ▪️[FEATURES.md](FEATURES.md)
+- ▪️[MANUAL.md](MANUAL.md)
+- 🔸[README.md](README.md)
+- ▪️[SPEC.md](SPEC.md)
+- ▪️[TESTING.md](TESTING.md)
+---
+
 ## Settings
 - `zdotter.zdotdir`: Root directory for `.zdoti` files. Defaults to `<workspace>/.zdotter` or `~/.zdotter` when no workspace is open.
 - `zdotter.outputTemplate1`: Template for **Insert zdot Template 1**. `${z}` is replaced with the generated zdot value.
 - `zdotter.outputTemplate2`: Template for **Insert zdot Template 2**. `${z}` is replaced with the generated zdot value.
+- `zdotter.outputTemplate3`: Template for **Insert zdot Template 3**. `${z}` is replaced with the generated zdot value.
+- `zdotter.outputTemplate4`: Template for **Insert zdot Template 4**. `${z}` is replaced with the generated zdot value.
 - `zdotter.freezeCursorOnInsert`: Defaults to `false`. When `true`, insert commands keep each cursor at its original position instead of moving after inserted text.
 
 ## Commands

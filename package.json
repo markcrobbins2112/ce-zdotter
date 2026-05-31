@@ -10,6 +10,55 @@
 	"categories": [
 		"Other"
 	],
+	"main": "dist/extension.cjs",
+	"files": [
+		"dist/extension.cjs",
+		"icon.jpg",
+		"AILOG.md",
+		"AITASKS.md",
+		"AGENTS.md",
+		"BUILD.md",
+		"CODE.md",
+		"FEATURES.md",
+		"MANUAL.md",
+		"README.md",
+		"SPEC.md",
+		"TESTING.md",
+		"LICENSE"
+	],
+	"scripts": {
+		"compile": "bun build.js",
+		"watch": "bun build.js --watch",
+		"vscode:prepublish": "bun build.js --production",
+		"package": "vsce package",
+		"install-vsix": "powershell -Command \"Get-Item *.vsix | Select-Object -First 1 | Foreach-Object { code --install-extension $_.FullName }\"",
+		"lint": "bun build.js && node --check dist/extension.cjs",
+		"unzip:latest": "bun unzip-latest.js zip.zip",
+		"compile:vsix": "npx vsce package",
+		"x:vscode:prepublish": "npm run compile",
+		"x:compile": "tsc -p ./",
+		"xwatch": "tsc -watch -p ./"
+	},
+	"devDependencies": {
+		"@types/adm-zip": "^0.5.8",
+		"@types/bun": "^1.3.14",
+		"@types/node": "^22.14.0",
+		"@types/source-map-support": "^0.5.10",
+		"@types/vscode": "^1.85.0",
+		"@vscode/vsce": "^3.6.2",
+		"adm-zip": "^0.5.17",
+		"source-map-support": "^0.5.21",
+		"typescript": "~5.8.2",
+		"vsce": "^2.15.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/markchristianrobbins/zdotter.git"
+	},
+	"bugs": {
+		"url": "https://github.com/markchristianrobbins/zdotter/issues"
+	},
+	"homepage": "https://github.com/markchristianrobbins/zdotter#readme",
 	"activationEvents": [
 		"onCommand:zdotter.insertZdot",
 		"onCommand:zdotter.insertTemplate1",
@@ -25,7 +74,6 @@
 		"onCommand:zdotter.prevZdash",
 		"onCommand:zdotter.openZdoti"
 	],
-	"main": "./out/extension.js",
 	"contributes": {
 		"configuration": {
 			"title": "zdotter",
@@ -128,25 +176,5 @@
 				"title": "zdotter: Open zdoti for zdot"
 			}
 		]
-	},
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"compile:vsix": "npx vsce package",
-		"watch": "tsc -watch -p ./"
-	},
-	"devDependencies": {
-		"@types/node": "^20.11.19",
-		"@types/vscode": "^1.85.0",
-		"typescript": "^5.3.3",
-		"vsce": "^2.15.0"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/markchristianrobbins/zdotter.git"
-	},
-	"bugs": {
-		"url": "https://github.com/markchristianrobbins/zdotter/issues"
-	},
-	"homepage": "https://github.com/markchristianrobbins/zdotter#readme"
+	}
 }
