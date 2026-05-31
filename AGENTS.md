@@ -14,7 +14,7 @@
 - ▪️[TESTING.md](TESTING.md)
 
 ## Application
-- create a vscode extension called ''
+- create a vscode extension called 'zdotter'
 
 ## Platform
 - Cursor, Vscode
