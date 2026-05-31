@@ -1,116 +1,152 @@
 {
-  "name": "zdotter",
-  "displayName": "zdotter",
-  "version": "0.0.1",
-  "description": "Manage zdots/zdashes and their index files.",
-  "publisher": "markrobbins",
-  "engines": {
-    "vscode": "^1.85.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [
-    "onCommand:zdotter.insertZdot",
-    "onCommand:zdotter.insertTemplate1",
-    "onCommand:zdotter.insertTemplate2",
-    "onCommand:zdotter.updateFile",
-    "onCommand:zdotter.gotoZdot",
-    "onCommand:zdotter.gotoZdotExisting",
-    "onCommand:zdotter.copyAsZdash",
-    "onCommand:zdotter.nextZdot",
-    "onCommand:zdotter.prevZdot",
-    "onCommand:zdotter.nextZdash",
-    "onCommand:zdotter.prevZdash",
-    "onCommand:zdotter.openZdoti"
-  ],
-  "main": "./out/extension.js",
-  "contributes": {
-    "configuration": {
-      "title": "zdotter",
-      "properties": {
-        "zdotter.zdotdir": {
-          "type": "string",
-          "default": "",
-          "description": "Root directory for zdoti files. Leave blank to default to <workspace>/.zdotter (or your home directory if no workspace is open)."
-        },
-        "zdotter.outputTemplate1": {
-          "type": "string",
-          "default": "z.${z}",
-          "description": "Template for Insert Zdot Template 1. ${z} is replaced with the zdot value."
-        },
-        "zdotter.outputTemplate2": {
-          "type": "string",
-          "default": "[${z}]",
-          "description": "Template for Insert Zdot Template 2. ${z} is replaced with the zdot value."
-        }
-      }
-    },
-    "commands": [
-      {
-        "command": "zdotter.insertZdot",
-        "title": "zdotter: Insert zdot"
-      },
-      {
-        "command": "zdotter.insertTemplate1",
-        "title": "zdotter: Insert zdot Template 1"
-      },
-      {
-        "command": "zdotter.insertTemplate2",
-        "title": "zdotter: Insert zdot Template 2"
-      },
-      {
-        "command": "zdotter.updateFile",
-        "title": "zdotter: Update File zdoti references"
-      },
-      {
-        "command": "zdotter.gotoZdot",
-        "title": "zdotter: Goto zdot from zdash"
-      },
-      {
-        "command": "zdotter.gotoZdotExisting",
-        "title": "zdotter: Goto zdot from zdash (focus existing)"
-      },
-      {
-        "command": "zdotter.copyAsZdash",
-        "title": "zdotter: Copy zdot as zdash"
-      },
-      {
-        "command": "zdotter.zdashLine",
-        "title": "zdotter: Zdash the line"
-      },
-      {
-        "command": "zdotter.nextZdot",
-        "title": "zdotter: Next zdot"
-      },
-      {
-        "command": "zdotter.prevZdot",
-        "title": "zdotter: Previous zdot"
-      },
-      {
-        "command": "zdotter.nextZdash",
-        "title": "zdotter: Next zdash"
-      },
-      {
-        "command": "zdotter.prevZdash",
-        "title": "zdotter: Previous zdash"
-      },
-      {
-        "command": "zdotter.openZdoti",
-        "title": "zdotter: Open zdoti for zdot"
-      }
-    ]
-  },
-  "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "compile:vsix": "npx vsce package",
-    "watch": "tsc -watch -p ./"
-  },
-  "devDependencies": {
-    "@types/node": "^20.11.19",
-    "@types/vscode": "^1.85.0",
-    "typescript": "^5.3.3",
-    "vsce": "^2.15.0"
-  }
+	"name": "zdotter",
+	"displayName": "zdotter",
+	"version": "0.0.2",
+	"description": "Manage zdots/zdashes and their index files.",
+	"publisher": "markrobbins",
+	"engines": {
+		"vscode": "^1.85.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:zdotter.insertZdot",
+		"onCommand:zdotter.insertTemplate1",
+		"onCommand:zdotter.insertTemplate2",
+		"onCommand:zdotter.toggleFreezeCursorOnInsert",
+		"onCommand:zdotter.updateFile",
+		"onCommand:zdotter.gotoZdot",
+		"onCommand:zdotter.gotoZdotExisting",
+		"onCommand:zdotter.copyAsZdash",
+		"onCommand:zdotter.nextZdot",
+		"onCommand:zdotter.prevZdot",
+		"onCommand:zdotter.nextZdash",
+		"onCommand:zdotter.prevZdash",
+		"onCommand:zdotter.openZdoti"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"configuration": {
+			"title": "zdotter",
+			"properties": {
+				"zdotter.zdotdir": {
+					"type": "string",
+					"default": "",
+					"description": "Root directory for zdoti files. Leave blank to default to <workspace>/.zdotter (or your home directory if no workspace is open). You really should assign this from a global directory so zdots will work anywhere"
+				},
+				"zdotter.outputTemplate1": {
+					"type": "string",
+					"default": "z.${z}",
+					"description": "Template for Insert Zdot Template 1. ${z} is replaced with the zdot value."
+				},
+				"zdotter.outputTemplate2": {
+					"type": "string",
+					"default": "[${z}]",
+					"description": "Template for Insert Zdot Template 2. ${z} is replaced with the zdot value."
+				},
+				"zdotter.outputTemplate3": {
+					"type": "string",
+					"default": "<a id=\"z${z}\"></a>",
+					"description": "Template for Insert Zdot Template 2. ${z} is replaced with the zdot value."
+				},
+				"zdotter.outputTemplate4": {
+					"type": "string",
+					"default": "[${z}]",
+					"description": "Template for Insert Zdot Template 2. ${z} is replaced with the zdot value."
+				},
+				"zdotter.freezeCursorOnInsert": {
+					"type": "boolean",
+					"default": false,
+					"description": "When true, insert commands keep the cursor at its original position instead of moving after inserted text."
+				}
+			}
+		},
+		"commands": [
+			{
+				"command": "zdotter.insertZdot",
+				"title": "zdotter: Insert zdot"
+			},
+			{
+				"command": "zdotter.insertTemplate1",
+				"title": "zdotter: Insert zdot Template 1"
+			},
+			{
+				"command": "zdotter.insertTemplate2",
+				"title": "zdotter: Insert zdot Template 2"
+			},
+			{
+				"command": "zdotter.insertTemplate3",
+				"title": "zdotter: Insert zdot Template 3"
+			},
+			{
+				"command": "zdotter.insertTemplate4",
+				"title": "zdotter: Insert zdot Template 4"
+			},
+			{
+				"command": "zdotter.toggleFreezeCursorOnInsert",
+				"title": "zdotter: Toggle Freeze Cursor On Insert"
+			},
+			{
+				"command": "zdotter.updateFile",
+				"title": "zdotter: Update File zdoti references"
+			},
+			{
+				"command": "zdotter.gotoZdot",
+				"title": "zdotter: Goto zdot from zdash"
+			},
+			{
+				"command": "zdotter.gotoZdotExisting",
+				"title": "zdotter: Goto zdot from zdash (focus existing)"
+			},
+			{
+				"command": "zdotter.copyAsZdash",
+				"title": "zdotter: Copy zdot as zdash"
+			},
+			{
+				"command": "zdotter.zdashLine",
+				"title": "zdotter: Zdash the line"
+			},
+			{
+				"command": "zdotter.nextZdot",
+				"title": "zdotter: Next zdot"
+			},
+			{
+				"command": "zdotter.prevZdot",
+				"title": "zdotter: Previous zdot"
+			},
+			{
+				"command": "zdotter.nextZdash",
+				"title": "zdotter: Next zdash"
+			},
+			{
+				"command": "zdotter.prevZdash",
+				"title": "zdotter: Previous zdash"
+			},
+			{
+				"command": "zdotter.openZdoti",
+				"title": "zdotter: Open zdoti for zdot"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"compile:vsix": "npx vsce package",
+		"watch": "tsc -watch -p ./"
+	},
+	"devDependencies": {
+		"@types/node": "^20.11.19",
+		"@types/vscode": "^1.85.0",
+		"typescript": "^5.3.3",
+		"vsce": "^2.15.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/markchristianrobbins/zdotter.git"
+	},
+	"bugs": {
+		"url": "https://github.com/markchristianrobbins/zdotter/issues"
+	},
+	"homepage": "https://github.com/markchristianrobbins/zdotter#readme"
 }

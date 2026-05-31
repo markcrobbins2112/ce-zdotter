@@ -10,6 +10,10 @@ function pad2(input: number): string {
   return input.toString().padStart(2, '0');
 }
 
+function pad4(input: number): string {
+  return input.toString().padStart(4, '0');
+}
+
 function generateZdotValue(): string {
   const now = new Date();
   const random = Math.floor(Math.random() * 10000)
@@ -20,6 +24,33 @@ function generateZdotValue(): string {
   )}${pad2(now.getHours())}${pad2(now.getMinutes())}${pad2(
     now.getSeconds()
   )}${random}`;
+}
+
+function generateUniqueZdotValues(count: number): string[] {
+  if (count <= 0) {
+    return [];
+  }
+  if (count > 10000) {
+    throw new Error('Cannot generate more than 10000 unique zdot values per insert.');
+  }
+
+  const now = new Date();
+  const prefix = `${now.getFullYear()}${pad2(now.getMonth() + 1)}${pad2(
+    now.getDate()
+  )}${pad2(now.getHours())}${pad2(now.getMinutes())}${pad2(now.getSeconds())}`;
+  const seen = new Set<number>();
+  const values: string[] = [];
+
+  while (values.length < count) {
+    const randomSuffix = Math.floor(Math.random() * 10000);
+    if (seen.has(randomSuffix)) {
+      continue;
+    }
+    seen.add(randomSuffix);
+    values.push(`${prefix}${pad4(randomSuffix)}`);
+  }
+
+  return values;
 }
 
 function resolveZdotDir(): string {
@@ -164,19 +195,53 @@ async function insertWithTemplate(template: string): Promise<void> {
     return;
   }
 
-  const zdotValue = generateZdotValue();
-  const replacement = template.replace(/\$\{z\}/g, zdotValue);
-  const insertText = replacement;
+  const cfg = vscode.workspace.getConfiguration('zdotter');
+  const freezeCursorOnInsert = cfg.get<boolean>('freezeCursorOnInsert') ?? false;
+  const originalSelections = editor.selections.map(
+    (selection) => new vscode.Selection(selection.active, selection.active)
+  );
+  let zdotValues: string[];
+  try {
+    zdotValues =
+      editor.selections.length > 1
+        ? generateUniqueZdotValues(editor.selections.length)
+        : [generateZdotValue()];
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unable to generate zdot values.';
+    vscode.window.showErrorMessage(message);
+    return;
+  }
 
   await editor.edit((editBuilder) => {
-    for (const selection of editor.selections) {
-      editBuilder.insert(selection.active, insertText);
+    for (let i = 0; i < editor.selections.length; i += 1) {
+      const selection = editor.selections[i];
+      const replacement = template.replace(/\$\{z\}/g, zdotValues[i]);
+      editBuilder.insert(selection.active, replacement);
     }
   });
 
+  if (freezeCursorOnInsert) {
+    editor.selections = originalSelections;
+  }
+
   const filePath = editor.document.uri.fsPath;
-  await writeZdoti(zdotValue, filePath);
-  vscode.window.setStatusBarMessage(`Inserted zdot ${zdotValue}`, 3000);
+  await Promise.all(zdotValues.map((zdotValue) => writeZdoti(zdotValue, filePath)));
+  if (zdotValues.length === 1) {
+    vscode.window.setStatusBarMessage(`Inserted zdot ${zdotValues[0]}`, 3000);
+  } else {
+    vscode.window.setStatusBarMessage(`Inserted ${zdotValues.length} zdots`, 3000);
+  }
+}
+
+async function toggleFreezeCursorOnInsert(): Promise<void> {
+  const cfg = vscode.workspace.getConfiguration('zdotter');
+  const current = cfg.get<boolean>('freezeCursorOnInsert') ?? false;
+  const next = !current;
+  await cfg.update('freezeCursorOnInsert', next, vscode.ConfigurationTarget.Global);
+  vscode.window.setStatusBarMessage(
+    `zdotter.freezeCursorOnInsert: ${next ? 'ON' : 'OFF'}`,
+    3000
+  );
 }
 
 async function updateFileZdots(): Promise<void> {
@@ -438,6 +503,10 @@ export function activate(context: vscode.ExtensionContext): void {
       const template = cfg.get<string>('outputTemplate2') ?? '[${z}]';
       return insertWithTemplate(template);
     }),
+    vscode.commands.registerCommand(
+      'zdotter.toggleFreezeCursorOnInsert',
+      toggleFreezeCursorOnInsert
+    ),
     vscode.commands.registerCommand('zdotter.updateFile', updateFileZdots),
     vscode.commands.registerCommand('zdotter.gotoZdot', gotoZdot),
     vscode.commands.registerCommand('zdotter.gotoZdotExisting', gotoZdotExisting),
