@@ -1,7 +1,0 @@
-Enabled Peek Definition for zdots/zdashes.
-- Added token detection, zdot lookup helpers, and a `DefinitionProvider` so Peek Definition on `z.<digits>` or `z-<digits>` jumps to the referenced file position if the `.zdoti` exists (`src/extension.ts`).
-- Rebuilt TypeScript successfully (`npm run compile`).
-
-Use it
-- Place cursor on a zdot/zdash and press `Alt+F12` (Peek Definition). It will open the referenced file at the matching `z.<digits>` if found.
-- For an updated VSIX with this feature, re-run: `npx vsce package`.

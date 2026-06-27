@@ -50,7 +50,7 @@
 		"adm-zip": "^0.5.17",
 		"source-map-support": "^0.5.21",
 		"typescript": "~5.8.2",
-		"vsce": "^2.15.0"
+		"vsce": "^1.25.1"
 	},
 	"repository": {
 		"type": "git",
@@ -61,20 +61,6 @@
 	},
 	"homepage": "https://github.com/markchristianrobbins/zdotter#readme",
 	"activationEvents": [
-		"onCommand:zdotter.insertZdot",
-		"onCommand:zdotter.insertTemplate1",
-		"onCommand:zdotter.insertTemplate2",
-		"onCommand:zdotter.toggleFreezeCursorOnInsert",
-		"onCommand:zdotter.updateFile",
-		"onCommand:zdotter.gotoZdot",
-		"onCommand:zdotter.gotoZdotExisting",
-		"onCommand:zdotter.copyAsZdash",
-		"onCommand:zdotter.nextZdot",
-		"onCommand:zdotter.prevZdot",
-		"onCommand:zdotter.nextZdash",
-		"onCommand:zdotter.prevZdash",
-		"onCommand:zdotter.copyNearestDotAsDash",
-		"onCommand:zdotter.openZdoti"
 	],
 	"contributes": {
 		"configuration": {
