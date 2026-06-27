@@ -54,12 +54,12 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/markchristianrobbins/zdotter.git"
+		"url": "https://github.com/markcrobbins2112/ce-zdotter.git"
 	},
 	"bugs": {
-		"url": "https://github.com/markchristianrobbins/zdotter/issues"
+		"url": "https://github.com/markcrobbins2112/ce-zdotter/issues"
 	},
-	"homepage": "https://github.com/markchristianrobbins/zdotter#readme",
+	"homepage": "https://github.com/markcrobbins2112/ce-zdotter#readme",
 	"activationEvents": [
 	],
 	"contributes": {
