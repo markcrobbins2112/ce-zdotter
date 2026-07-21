@@ -1,4 +1,8 @@
-# AI Tasks
+---
+title: AITASKS
+---
+
+# AITASKS
 ---
 ## Back to...
 - ▪️[AGENTS.md](AGENTS.md)

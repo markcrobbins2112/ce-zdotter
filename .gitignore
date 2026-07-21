@@ -1,6 +1,9 @@
+.obsidian/
+desktop.ini
 node_modules/
 node_modules.lnk
 out
+dist/
 .vscode
 *.vsix
 \!*.*

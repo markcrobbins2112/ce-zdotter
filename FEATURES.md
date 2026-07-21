@@ -1,4 +1,8 @@
-# Features
+---
+title: FEATURES
+---
+
+# FEATURES
 
 ---
 ## Back to...

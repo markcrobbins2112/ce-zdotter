@@ -1,4 +1,8 @@
-# Manual
+---
+title: MANUAL
+---
+
+# MANUAL
 
 <!-- template
 This guide describes the structural architecture, module layout, internal algorithms, optimization behaviors, and technical specifications of the {app name} codebase.

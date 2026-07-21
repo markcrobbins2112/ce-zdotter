@@ -1,4 +1,8 @@
-# Code
+---
+title: CODE
+---
+
+# CODE
 
 ## Go to...
 - ▪️[AGENTS.md](AGENTS.md)

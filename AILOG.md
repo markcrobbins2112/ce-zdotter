@@ -1,4 +1,8 @@
-# AI Development Log
+---
+title: AILOG
+---
+
+# AILOG
 
 ---
 ## Back to...

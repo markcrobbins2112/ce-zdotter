@@ -1,4 +1,8 @@
-# Spec
+---
+title: SPEC
+---
+
+# SPEC
 
 This document compiles the user requirements and instructions from `AGENTS.md` and provides detailed documentation of how the extension was architected and built.
 

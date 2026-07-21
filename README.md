@@ -1,4 +1,8 @@
-# zdotter
+---
+title: README
+---
+
+# README
 
 VS Code extension to manage zdots/zdashes and their companion `.zdoti` index files.
 
