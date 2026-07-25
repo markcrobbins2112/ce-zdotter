@@ -2,29 +2,28 @@
 title: FEATURES
 ---
 
-<!-- # TEMPLATE: FEATURES.template.md -->
+<!-- TEMPLATE: FEATURES.template.md -->
 <!--
-# FEATURES
-# Any text bounded by double curly braces {{like this}} is a placeholder for you to fill out.
-# Replace those placeholders with real paths, rules, and project constraints.
-#
-# INSTRUCTIONS FOR THE AI AGENT:
-# This file structures user-facing capabilities and functional features.
-# Group related software parts into "Feature Groups" (with tags and anchors),
-# then list them alphabetically under "All Features".
+FEATURES
+Any text bounded by double curly braces {{like this}} is a placeholder for you to fill out.
+Replace those placeholders with real paths, rules, and project constraints.
+
+INSTRUCTIONS FOR THE AI AGENT:
+This file structures user-facing capabilities and functional features.
+Group related software parts into "Feature Groups" (with tags and anchors),
+then list them alphabetically under "All Features".
 -->
 
 <!-- markdownlint-disable MD013 -->
 
 # FEATURES
-<a id="a-features"></a>[TOC](#toc-features)
 
 Welcome to {{Specify Program Name}}! {{Provide a 2-3 sentence overview of what the tool accomplishes and how it improves operational workflows}}.
 
 ---
 
 ## 📑 AI Primary Files
-<a id="a-aiprimaryfiles"></a>[TOC](#toc-aiprimaryfiles)
+
 - 🔹 [AGENTS.md](../AGENTS.md)
 - 🔹 [ARCHIVE.md](ARCHIVE.md)
 - 🔹 [BUILD.md](BUILD.md)
@@ -45,15 +44,10 @@ Welcome to {{Specify Program Name}}! {{Provide a 2-3 sentence overview of what t
 <!-- TOC location -->
 ## 🔍 Table of Contents
 <!-- Maintained by script -->
-- [FEATURES](#a-features) <a id="toc-features"></a> ^toc-features
-  - [📑 AI Primary Files](#a-aiprimaryfiles) <a id="toc-aiprimaryfiles"></a> ^toc-aiprimaryfiles
-  - [📦 Feature Groups](#a-featuregroups) <a id="toc-featuregroups"></a> ^toc-featuregroups
-  - [🗄️ All Features](#a-allfeatures) <a id="toc-allfeatures"></a> ^toc-allfeatures
-  - [📉 Deprecated / Removed Features](#a-deprecatedremovedfeatures) <a id="toc-deprecatedremovedfeatures"></a> ^toc-deprecatedremovedfeatures
-  - [🚀 Go to...](#a-goto) <a id="toc-goto"></a> ^toc-goto
+
 ---
+
 ## 📦 Feature Groups
-<a id="a-featuregroups"></a>[TOC](#toc-featuregroups)
 
 <!-- template: feature group
 ### {{Icon}} 1. {{Group Title / e.g., Automated Layout Management}}
@@ -65,7 +59,6 @@ Welcome to {{Specify Program Name}}! {{Provide a 2-3 sentence overview of what t
 ---
 
 ## 🗄️ All Features
-<a id="a-allfeatures"></a>[TOC](#toc-allfeatures)
 
 <!-- template: feature
 ### {{Feature Title}}
@@ -77,7 +70,6 @@ Welcome to {{Specify Program Name}}! {{Provide a 2-3 sentence overview of what t
 ---
 
 ## 📉 Deprecated / Removed Features
-<a id="a-deprecatedremovedfeatures"></a>[TOC](#toc-deprecatedremovedfeatures)
 
 <!-- template: deprecated
 
@@ -87,7 +79,7 @@ Welcome to {{Specify Program Name}}! {{Provide a 2-3 sentence overview of what t
 
 ---
 ## 🚀 Go to...
-<a id="a-goto"></a>[TOC](#toc-goto)
+
 - 🔹 [AGENTS.md](../AGENTS.md)
 - 🔹 [ARCHIVE.md](ARCHIVE.md)
 - 🔹 [BUILD.md](BUILD.md)
@@ -103,4 +95,4 @@ Welcome to {{Specify Program Name}}! {{Provide a 2-3 sentence overview of what t
 - 🔹 [TESTING.md](TESTING.md)
 - 🔹 [VERSIONS.md](VERSIONS.md)
 
-<!-- # TEMPLATE: FEATURES.template.md -->
+<!-- TEMPLATE: FEATURES.template.md -->

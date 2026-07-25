@@ -2,24 +2,23 @@
 title: VERSIONS
 ---
 
-<!-- # TEMPLATE: VERSIONS.template.md -->
+<!-- TEMPLATE: VERSIONS.template.md -->
 <!--
-# VERSIONS
-# Any text bounded by double curly braces {{like this}} is a placeholder for you to fill out.
-# Replace those placeholders with semantic version history and deployment updates.
-#
-# INSTRUCTIONS FOR THE AI AGENT:
-# Use this document to trace the evolution of the software across versions.
-# When deploying a new stable release or version milestone, document it at the TOP of this file using semantic versioning.
+VERSIONS
+Any text bounded by double curly braces {{like this}} is a placeholder for you to fill out.
+Replace those placeholders with semantic version history and deployment updates.
+
+INSTRUCTIONS FOR THE AI AGENT:
+Use this document to trace the evolution of the software across versions.
+When deploying a new stable release or version milestone, document it at the TOP of this file using semantic versioning.
 -->
 
 <!-- markdownlint-disable MD013 -->
 
 # VERSIONS
-<a id="a-versions"></a>[TOC](#toc-versions)
 
 ## 📑 AI Primary Files
-<a id="a-aiprimaryfiles"></a>[TOC](#toc-aiprimaryfiles)
+
 - 🔹 [AGENTS.md](../AGENTS.md)
 - 🔹 [ARCHIVE.md](ARCHIVE.md)
 - 🔹 [BUILD.md](BUILD.md)
@@ -40,13 +39,10 @@ title: VERSIONS
 <!-- TOC location -->
 ## 🔍 Table of Contents
 <!-- Maintained by script -->
-- [VERSIONS](#a-versions) <a id="toc-versions"></a> ^toc-versions
-  - [📑 AI Primary Files](#a-aiprimaryfiles) <a id="toc-aiprimaryfiles"></a> ^toc-aiprimaryfiles
-  - [🚀 Stable Releases & Milestones](#a-stablereleasesmilestones) <a id="toc-stablereleasesmilestones"></a> ^toc-stablereleasesmilestones
-  - [🚀 Go to...](#a-goto) <a id="toc-goto"></a> ^toc-goto
+
 ---
+
 ## 🚀 Stable Releases & Milestones
-<a id="a-stablereleasesmilestones"></a>[TOC](#toc-stablereleasesmilestones)
 
 <!-- template: release
 ### 🏷️ v1.1.0 ({{YYYY-MM-DD}}) - {{Release Update Name}}
@@ -108,4 +104,4 @@ title: VERSIONS
 - 🔹 [TESTING.md](TESTING.md)
 - 🔸 [VERSIONS.md](VERSIONS.md)
 
-<!-- # TEMPLATE: VERSIONS.template.md -->
+<!-- TEMPLATE: VERSIONS.template.md -->
