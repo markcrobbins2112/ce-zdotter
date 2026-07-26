@@ -28,6 +28,7 @@
 		"LICENSE"
 	],
 	"scripts": {
+		"build": "bun build.js",
 		"compile": "bun build.js",
 		"watch": "bun build.js --watch",
 		"vscode:prepublish": "bun build.js --production",

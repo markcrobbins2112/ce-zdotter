@@ -39,18 +39,12 @@ Keep the very latest entry at the top of the "Log Entries" section.
 ---
 
 ## 💾 Commit Message
-<!--
-Always maintain a clean, copyable commit message here summarizing the work from the active turn.
-This section must be emptied or updated as the user requests. Let the commit message strictly
-follow Conventional Commits styling (e.g., feat:, fix:, chore:, docs:, refactor:).
--->
 
 ```text
-{{feat,chore,fix}} {{version}} {{ai maintains this message}}
-{{Conventional Commits prefix}}: {{high-level summary of action}}
-- {{Key bullet point of changes}}
-- {{Another key bullet point}}
-- {{Details about files adjusted}}
+docs: v0.0.3 Update documentation for build pipeline, scripts, and manual
+- Updated AIMD/BUILD.md with Bun bundling mechanics, target runtime, and full npm scripts reference table
+- Updated README.md with setup, build pipeline, and quick reference scripts table
+- Updated AIMD/MANUAL.md with zdotter architecture diagram, core modules, 18-digit Zdot algorithm, and troubleshooting
 ```
 
 ---
@@ -64,30 +58,27 @@ follow Conventional Commits styling (e.g., feat:, fix:, chore:, docs:, refactor:
 
 ## 📝 Log Entries
 
-<!--
-  INSTRUCTION FOR NEW ENTRIES:
-  Insert new entries directly AT THE TOP of this list, just after this comment.
-  List of Log Entries
--->
+  ### 📅 2026-07-26T06:22:00Z
+  #### 🎯 Primary Goals & Requirements
+  - Read `AGENTS.md` and project markdown files.
+  - Study project structure and update project documentation.
+  - Thoroughly explain the build process, bundling pipeline, and npm scripts.
 
-<!-- template: log item
+  #### 🛠️ Completed Changes in this Session
+  - **`AIMD/BUILD.md`**: Documented Bun compiler/bundler setup, `dist/extension.cjs` CommonJS target, inline/minified sourcemap behavior, and comprehensive npm scripts reference table.
+  - **`README.md`**: Updated Workspace Setup & Build Pipeline sections with prerequisite software, local dev steps, linting, packaging, and scripts reference table.
+  - **`AIMD/MANUAL.md`**: Filled out complete developer manual including Mermaid architecture diagram, core module interfaces, 18-digit timestamp algorithm formula, registered commands, and troubleshooting guides.
 
-  ### 📅 YYYY-MM-DDTHH:MM:SSZ (Use the current UTC timestamp)
-  #### 🎯 Primary Goals & Requirements [YYYY-MM-DDTHH:MM:SSZ]
-  - {{Describe what the user asked for or what the backlog item required}}
-  - {{Add any constraints detected or defined}}
+  #### 🔸 Affected Files
+  - [/AIMD/BUILD.md](/AIMD/BUILD.md)
+  - [/README.md](/README.md)
+  - [/AIMD/MANUAL.md](/AIMD/MANUAL.md)
+  - [/AIMD/LOG.md](/AIMD/LOG.md)
+  - [/AIMD/TASKS.md](/AIMD/TASKS.md)
 
-  #### 🛠️ Completed Changes in this Session [YYYY-MM-DDTHH:MM:SSZ]
-  - {{Action Item 1}}: {{Detailed summary of file edits, additions, or configurations}}
-  - {{Action Item 2}}: {{Explain why changes were made and how they interact}}
+  #### 🍀 Next Steps, Suggestions, Concerns
+  - All project markdown documentation is fully in sync with codebase implementation and build system.
 
-  #### 🔸 Affected Files [YYYY-MM-DDTHH:MM:SSZ]
-  - [/path/to/modified_file_1.ext](/path/to/modified_file_1.ext)
-  - [/path/to/modified_file_2.ext](/path/to/modified_file_2.ext)
-
-  #### 🍀 Next Steps, Suggestions, Concerns [YYYY-MM-DDTHH:MM:SSZ]
-  - {{Action Item 1}}: {{Detailed summary}}
--->
 
 ---
 

@@ -39,7 +39,14 @@ core algorithms, algebraic formulas, configuration guidelines, and technical spe
 
 <!-- TOC location -->
 ## 🔍 Table of Contents
-<!-- Maintained by script -->
+- [MANUAL](#manual)
+  - [📥 Installation & Initial Deployment](#-installation--initial-deployment)
+  - [🏗️ 1. Architecture Overview](#️-1-architecture-overview)
+  - [🧠 2. Core Modules & Systems](#-2-core-modules--systems)
+  - [🔎 3. Core Algorithm & Mathematical Formulas](#-3-core-algorithm--mathematical-formulas)
+  - [🛰️ 4. Commands, Keybindings & Context Flags](#️-4-commands-keybindings--context-flags)
+  - [🔧 5. Workspace Build & Configuration](#-5-workspace-build--configuration)
+  - [🔍 Diagnostics & Common Troubleshooting](#-diagnostics--common-troubleshooting)
 
 ---
 
@@ -47,112 +54,98 @@ core algorithms, algebraic formulas, configuration guidelines, and technical spe
 
 ### Setup Sequence
 
-- 1. **Compile/Build Assets:** Run the compile script or build pipeline as documented in [BUILD.md](BUILD.md).
-- 1. **Apply Configurations:** Run administrative scripts or system configurations required for the base application environment.
-- 1. **Register Components:** Execute target registry configurations or system file bindings to link the software with the host operating system.
+1. **Compile/Build Assets**: Execute `npm run compile` to invoke `build.js` via Bun and assemble `dist/extension.cjs`.
+2. **Package Extension**: Execute `npm run package` or `npm run compile:vsix` to generate the `.vsix` extension package.
+3. **Register Components**: Install into local VS Code / Cursor via `npm run install-vsix` or `code --install-extension <package>.vsix`.
 
 ---
 
 ## 🏗️ 1. Architecture Overview
-<!--
-Outline the structural relationship of files and modules.
-Include raw ASCII boxes or diagrams to make the architecture immediately obvious.
-Detail the high-level operational lifecycle, stating what initiates, handles, and registers events
--->
 
 ```mermaid
 graph TD
-    %% Custom Dark Theme Definition
-
-    %% Define Styles
     classDef darkNode fill:#1e1e2e,stroke:#45475a,stroke-width:2px,color:#cdd6f4;
     classDef mainNode fill:#313244,stroke:#f5e0dc,stroke-width:2px,color:#f5e0dc;
 
-    %% Define Nodes
-    Main["Main Module Client Interface"]
-    Core["Central Control Engine / Core"]
-    ModA["Module A / Hooks"]
-    ModB["Module B"]
+    VSCode["VS Code / Cursor Host Editor"]
+    ExtMain["Extension Entry (src/extension.ts)"]
+    Cmds["Command Controllers (17 Registered Commands)"]
+    ZdotiStorage["Index Storage Directory (.zdoti)"]
+    TargetFiles["Source Code & Documents"]
 
-    %% Apply Styles
-    class Main mainNode;
-    class Core,ModA,ModB darkNode;
+    class VSCode mainNode;
+    class ExtMain,Cmds,ZdotiStorage,TargetFiles darkNode;
 
-    %% Define Flow Connections
-    Main --> Core
-    Core --> ModA
-    Core --> ModB
-
-    %% Link Customization
-    linkStyle default stroke:#6c7086,stroke-width:2px;
-
+    VSCode --> ExtMain
+    ExtMain --> Cmds
+    Cmds -->|Generates zdot / Reads zdash| TargetFiles
+    Cmds -->|Reads/Writes Index File| ZdotiStorage
+    ZdotiStorage -->|Resolves Anchor Path| TargetFiles
 ```
+
+### High-Level Data Flow
+1. **Insert Zdot**: User triggers insert command -> 18-digit timestamp ID is generated -> Text inserted into active editor -> `.zdoti` index file written to `zdotdir/YYYY/MM/DD/HHMMSSRRRR.zdoti`.
+2. **Jump to Zdot**: User selects a `zdash` (`z-18digits`) -> Extension locates `.zdoti` -> Reads target file path on line 1 -> Opens target file and highlights matching `z.18digits`.
 
 ---
 
 ## 🧠 2. Core Modules & Systems
-<!--
-Document individual subsystems, class constructors, interfaces,   and persistent background loops that govern state transitions.
-List of Core Modules
--->
-<!-- template: core module
-- **{{name}}**: {{Describe internal class interfaces, global trackers, state variables, and callbacks}}
--->
+
+- **`resolveZdotDir()`**: Determines storage directory. Priority:
+  1. `zdotter.zdotdir` configuration setting.
+  2. Workspace root `.zdotter` folder (`<workspace>/.zdotter`).
+  3. Home directory `.zdotter` folder (`~/.zdotter`).
+- **`getZdotiPath(zdotValue, zdotDir)`**: Computes date-sharded index file path: `[zdotDir]/[YYYY]/[MM]/[DD]/[HHMMSSRRRR].zdoti`.
+- **`writeZdoti(zdotValue, targetFile)`**: Writes or updates the `.zdoti` file with target file absolute path on line 1.
+- **`insertZdotHandler(outputTemplate)`**: Handles single and multi-cursor zdot creation and insertion.
+- **`gotoZdotHandler(focusExisting)`**: Scans current line for `zdash` (`z-<digits>`), resolves source file via `.zdoti`, opens file and positions cursor on `z.<digits>`.
 
 ---
 
 ## 🔎 3. Core Algorithm & Mathematical Formulas
-<!--
-Specify any underlying physical or software math calculations used.
-Represent equations cleanly in LaTeX format (e.g. $$ formula $$) with detailed variable legends.
-Describe the logical steps, logic gates, conditional switches, or core algorithm steps}}
-List of formulas
--->
-<!-- template: formula
-- **`{{name}}`**: {{description}}
--->
+
+- **18-Digit Zdot Identifier Generation Formula**:
+  $$ \text{ZdotID} = \text{YYYY} \mathbin{\Vert} \text{MM} \mathbin{\Vert} \text{DD} \mathbin{\Vert} \text{HH} \mathbin{\Vert} \text{MM} \mathbin{\Vert} \text{SS} \mathbin{\Vert} \text{RRRR} $$
+  - $\text{YYYY}$: 4-digit year (e.g. `2026`)
+  - $\text{MM}$: 2-digit month (`01`-`12`)
+  - $\text{DD}$: 2-digit day (`01`-`31`)
+  - $\text{HH}$: 2-digit hour (`00`-`23`)
+  - $\text{MM}$: 2-digit minute (`00`-`59`)
+  - $\text{SS}$: 2-digit second (`00`-`59`)
+  - $\text{RRRR}$: 4-digit padded random suffix (`0000`-`9999`)
 
 ---
 
 ## 🛰️ 4. Commands, Keybindings & Context Flags
-<!--
-Detail the operational command registry. This lists all binding combinations,  modifier mappings, context filters, and background triggering gates.
-List of actions
--->
-<!-- tamplate: action
-- **{{name}}**:
-  - **{{subitem}}**: {{desc}}
-  - **{{subitem}}**: {{desc}}
-  - **{{subitem}}**: {{desc}}
--->
+
+- **`zdotter.insertZdot`**: Insert default zdot (`z.<id>`).
+- **`zdotter.insertTemplate1` - `4`**: Insert zdot formatted with user templates 1-4.
+- **`zdotter.gotoZdot`**: Jump to zdot source from zdash link.
+- **`zdotter.gotoZdotExisting`**: Jump to zdot source, focusing existing editor group.
+- **`zdotter.copyAsZdash`**: Copy zdot under cursor as zdash (`z-<id>`).
+- **`zdotter.updateFile`**: Scan document and generate missing `.zdoti` index files for all `z.<id>` occurrences.
+- **`zdotter.nextZdot` / `prevZdot`**: Cycle cursor through zdots.
+- **`zdotter.nextZdash` / `prevZdash`**: Cycle cursor through zdashes.
 
 ---
 
 ## 🔧 5. Workspace Build & Configuration
-<!--
-Document configuration files format (.ini, .json, .env.example) and properties mapping. Highlight how to customize settings.
-List of configs
--->
-<!-- template: config
-- **{{name}}:** {{value}}
-  - **Purpose:** {{purpose}}
-  - **Format:** {{format}}
-  - **Details:** {{details}}
--->
+
+- **`zdotter.zdotdir`**: String setting. Custom root folder path for `.zdoti` index files.
+- **`zdotter.outputTemplate1-4`**: String templates. Defaults: `"z.${z}"`, `"[${z}]"`, `"<a id=\"z${z}\"></a>"`, `"[${z}]"`.
+- **`zdotter.freezeCursorOnInsert`**: Boolean setting. Keeps cursor stationary during insertion when true.
 
 ---
 
 ## 🔍 Diagnostics & Common Troubleshooting
 
-### Known Failure States & Remediations
-<!--
-List of Symptoms
--->
-<!-- template: symptom
-#### 🚨 Symptom: "{{description}}"
-- **Root Cause:** {{root cause}}
-- **Remediation:** {{remediation}}
--->
+#### 🚨 Symptom: "No zdash found on current line"
+- **Root Cause**: Cursor is not placed on a line containing `z-<18digits>`.
+- **Remediation**: Ensure cursor is positioned on or next to a valid `z-` reference.
+
+#### 🚨 Symptom: "Zdoti file not found"
+- **Root Cause**: The `.zdoti` index file was moved or deleted, or `zdotdir` path is mismatched across workspaces.
+- **Remediation**: Run `zdotter.updateFile` inside the source file to recreate all `.zdoti` index files.
 
 ---
 

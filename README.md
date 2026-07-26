@@ -100,15 +100,56 @@ The extension registers the following commands in the VS Code Command Palette (`
 
 ---
 
-## Workspace Setup & Compilation
+## Workspace Setup & Build Pipeline
 
-- **Prerequisites**: Make sure NodeJS is installed.
-- **Local Assembly**:
-  ```bash
-  npm install
-  npm run compile
-  ```
-- **Packaging VSIX**:
-  ```bash
-  npm run compile:vsix
-  ```
+### Prerequisites
+- **Node.js**: v18.x / v20.x or higher
+- **Bun**: v1.x (for running `build.js` fast bundler)
+
+### Local Development & Build
+1. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
+2. **Compile Extension**:
+   ```bash
+   npm run compile
+   ```
+   *Bundles `src/extension.ts` into `dist/extension.cjs` using Bun.*
+
+3. **Watch Mode (Incremental Rebuilds)**:
+   ```bash
+   npm run watch
+   ```
+
+4. **Lint / Syntax Verification**:
+   ```bash
+   npm run lint
+   ```
+   *Compiles the extension and runs `node --check` against `dist/extension.cjs` to catch syntax errors.*
+
+5. **Package into VSIX Installer**:
+   ```bash
+   npm run package
+   # or
+   npm run compile:vsix
+   ```
+   *Triggers `bun build.js --production` and packages the extension into a `.vsix` installer using `vsce`.*
+
+6. **Install VSIX into VS Code**:
+   ```bash
+   npm run install-vsix
+   ```
+
+### NPM Scripts Quick Reference
+
+| Script | Command | Purpose |
+| :--- | :--- | :--- |
+| `compile` | `bun build.js` | Bundles `src/extension.ts` -> `dist/extension.cjs` (dev mode) |
+| `watch` | `bun build.js --watch` | Watches for changes and auto-rebuilds `dist/extension.cjs` |
+| `vscode:prepublish` | `bun build.js --production` | Minified production build hook used by `vsce package` |
+| `lint` | `bun build.js && node --check dist/extension.cjs` | Bundles and verifies CJS syntax validity |
+| `package` | `vsce package` | Packages extension into `.vsix` installer |
+| `compile:vsix` | `npx vsce package` | Alias for packaging `.vsix` |
+| `install-vsix` | `powershell ...` | Installs `.vsix` into local VS Code instance |
+

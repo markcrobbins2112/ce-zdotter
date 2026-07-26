@@ -57,15 +57,12 @@ List of blocks
 
 ### 💬 Incoming tasks from chat
 
-- [🗃️ Completed Backlog (Archive)](#a-completedbacklogarchive)
+- [x] Read `AGENTS.md` and study `zdotter` project architecture and files
+- [x] Update `AIMD/BUILD.md` explaining build system, Bun bundler (`build.js`), and all `package.json` scripts
+- [x] Update `README.md` workspace setup and build reference
+- [x] Update `AIMD/MANUAL.md` developer architecture, algorithm formulas, commands, and troubleshooting
+- [x] Update `AIMD/LOG.md` development history and commit log
 
-<!--
-List of chat tasks
--->
-<!-- template: chat task
-- [x] {{Goal}}
-  - {{sub goal, issues}}
--->
 
 ---
 
