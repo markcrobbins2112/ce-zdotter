@@ -1,7 +1,7 @@
 {
 	"name": "zdotter",
 	"displayName": "zdotter",
-	"version": "0.0.3",
+	"version": "1.0.4",
 	"description": "Manage zdots/zdashes and their index files.",
 	"publisher": "markrobbins",
 	"engines": {
@@ -15,16 +15,8 @@
 	"files": [
 		"dist/extension.cjs",
 		"icon.jpg",
-		"AILOG.md",
-		"AITASKS.md",
-		"AGENTS.md",
-		"BUILD.md",
-		"CODE.md",
-		"FEATURES.md",
-		"MANUAL.md",
 		"README.md",
-		"SPEC.md",
-		"TESTING.md",
+		"AGENTS.md",
 		"LICENSE"
 	],
 	"scripts": {
@@ -35,20 +27,14 @@
 		"package": "vsce package",
 		"install-vsix": "powershell -Command \"Get-Item *.vsix | Select-Object -First 1 | Foreach-Object { code --install-extension $_.FullName }\"",
 		"lint": "bun build.js && node --check dist/extension.cjs",
-		"unzip:latest": "bun unzip-latest.js zip.zip",
-		"compile:vsix": "npx vsce package",
-		"x:vscode:prepublish": "npm run compile",
-		"x:compile": "tsc -p ./",
-		"xwatch": "tsc -watch -p ./"
+		"compile:vsix": "npx vsce package"
 	},
 	"devDependencies": {
-		"@types/adm-zip": "^0.5.8",
 		"@types/bun": "^1.3.14",
 		"@types/node": "^22.14.0",
 		"@types/source-map-support": "^0.5.10",
 		"@types/vscode": "^1.85.0",
 		"@vscode/vsce": "^3.6.2",
-		"adm-zip": "^0.5.17",
 		"source-map-support": "^0.5.21",
 		"typescript": "~5.8.2",
 		"vsce": "^1.25.1"
